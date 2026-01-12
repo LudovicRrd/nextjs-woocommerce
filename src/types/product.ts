@@ -7,7 +7,7 @@ export interface Node {
   __typename: string;
   price: string;
   regularPrice: string;
-  salePrice?: string;
+  saleprice?: string | null;
 }
 
 export interface ProductCategory {
@@ -38,7 +38,7 @@ export interface Product {
   image: Image;
   price: string;
   regularPrice: string;
-  salePrice?: string;
+  saleprice?: string | null;
   productCategories?: {
     nodes: ProductCategory[];
   };
@@ -52,7 +52,7 @@ export interface Product {
     nodes: Array<{
       price: string;
       regularPrice: string;
-      salePrice?: string;
+      saleprice?: string | null;
       attributes?: {
         nodes: AttributeNode[];
       };

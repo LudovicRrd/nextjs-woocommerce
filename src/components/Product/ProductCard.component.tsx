@@ -7,7 +7,7 @@ interface ProductCardProps {
   name: string;
   price: string;
   regularPrice: string;
-  salePrice?: string;
+  saleprice?: string | null;
   onSale: boolean;
   slug: string;
   image?: {

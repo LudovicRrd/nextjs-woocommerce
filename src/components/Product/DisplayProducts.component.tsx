@@ -13,7 +13,7 @@ interface Node {
   __typename: string;
   price: string;
   regularPrice: string;
-  salePrice?: string;
+  saleprice?: string | null;
 }
 
 interface Variations {
@@ -29,7 +29,7 @@ interface RootObject {
   image: Image;
   price: string;
   regularPrice: string;
-  salePrice?: string;
+  saleprice?: string | null;
   variations: Variations;
 }
 

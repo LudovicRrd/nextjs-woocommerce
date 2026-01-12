@@ -49,7 +49,7 @@ export interface IVariationNodes {
   stockQuantity: number;
   purchasable: boolean;
   onSale: boolean;
-  salePrice?: string;
+  saleprice?: string | null;
   regularPrice: string;
 }
 
@@ -68,7 +68,7 @@ export interface IProduct {
   onSale: boolean;
   image: IImage;
   name: string;
-  salePrice?: string;
+  saleprice?: string | null;
   regularPrice: string;
   price: string;
   stockQuantity: number;
