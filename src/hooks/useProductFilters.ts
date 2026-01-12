@@ -84,17 +84,17 @@ export const useProductFilters = (products: Product[]) => {
     });
 
 
-    // Sort products
+        // Sort products
     return [...(filtered || [])].sort((a, b) => {
-      // SAFE FIX 2: Check if price exists in sort logic too
-      const safePriceA = a.price || '0';
-      const safePriceB = b.price || '0';
-      
+      // FIX: Use '0' if price is null/undefined
+      const safePriceA = (a.price || '0');
+      const safePriceB = (b.price || '0');
+
       const priceA = parseFloat(safePriceA.replace(/[^0-9.]/g, ''));
       const priceB = parseFloat(safePriceB.replace(/[^0-9.]/g, ''));
 
-
       switch (sortBy) {
+
         case 'price-low':
           return priceA - priceB;
         case 'price-high':
