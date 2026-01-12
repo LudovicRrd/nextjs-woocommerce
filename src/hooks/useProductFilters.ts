@@ -93,7 +93,8 @@ const filterProducts = (products: Product[]) => {
       return true;
     });
 
-
+// Sort products
+    console.log("Sorting products..."); // Add this
         // Sort products
     return [...(filtered || [])].sort((a, b) => {
       // FIX: Use '0' if price is null/undefined
