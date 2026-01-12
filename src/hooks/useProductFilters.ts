@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Product, ProductType } from '@/types/product';
 import { getUniqueProductTypes } from '@/utils/functions/productUtils';
 
+
 export const useProductFilters = (products: Product[]) => {
   const [sortBy, setSortBy] = useState('popular');
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
@@ -11,6 +12,7 @@ export const useProductFilters = (products: Product[]) => {
     products ? getUniqueProductTypes(products) : [],
   );
 
+
   const toggleProductType = (id: string) => {
     setProductTypes((prev) =>
       prev.map((type) =>
@@ -18,6 +20,7 @@ export const useProductFilters = (products: Product[]) => {
       ),
     );
   };
+
 
   const resetFilters = () => {
     setSelectedSizes([]);
@@ -28,13 +31,20 @@ export const useProductFilters = (products: Product[]) => {
     );
   };
 
+
   const filterProducts = (products: Product[]) => {
     const filtered = products?.filter((product: Product) => {
       // Filter by price
-      const productPrice = parseFloat(product.price.replace(/[^0-9.]/g, ''));
+      // SAFE FIX 1: Check if price exists
+      const safePriceString = product.price || '0'; 
+      const productPrice = parseFloat(safePriceString.replace(/[^0-9.]/g, ''));
+      
       const withinPriceRange =
         productPrice >= priceRange[0] && productPrice <= priceRange[1];
+
+
       if (!withinPriceRange) return false;
+
 
       // Filter by product type
       const selectedTypes = productTypes
@@ -49,29 +59,40 @@ export const useProductFilters = (products: Product[]) => {
           return false;
       }
 
+
       // Filter by size
       if (selectedSizes.length > 0) {
+        // Safe check for missing size nodes
         const productSizes =
-          product.allPaSizes?.nodes.map((node) => node.name) || [];
+          product.allPaSizes?.nodes?.map((node) => node.name) || [];
         if (!selectedSizes.some((size) => productSizes.includes(size)))
           return false;
       }
 
+
       // Filter by color
       if (selectedColors.length > 0) {
+        // Safe check for missing color nodes
         const productColors =
-          product.allPaColors?.nodes.map((node) => node.name) || [];
+          product.allPaColors?.nodes?.map((node) => node.name) || [];
         if (!selectedColors.some((color) => productColors.includes(color)))
           return false;
       }
 
+
       return true;
     });
 
+
     // Sort products
     return [...(filtered || [])].sort((a, b) => {
-      const priceA = parseFloat(a.price.replace(/[^0-9.]/g, ''));
-      const priceB = parseFloat(b.price.replace(/[^0-9.]/g, ''));
+      // SAFE FIX 2: Check if price exists in sort logic too
+      const safePriceA = a.price || '0';
+      const safePriceB = b.price || '0';
+      
+      const priceA = parseFloat(safePriceA.replace(/[^0-9.]/g, ''));
+      const priceB = parseFloat(safePriceB.replace(/[^0-9.]/g, ''));
+
 
       switch (sortBy) {
         case 'price-low':
@@ -85,6 +106,7 @@ export const useProductFilters = (products: Product[]) => {
       }
     });
   };
+
 
   return {
     sortBy,
