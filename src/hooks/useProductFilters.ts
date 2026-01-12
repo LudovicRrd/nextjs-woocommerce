@@ -30,19 +30,29 @@ export const useProductFilters = (products: Product[]) => {
       prev.map((type) => ({ ...type, checked: false })),
     );
   };
+<<<<<<< HEAD
 
 
   const filterProducts = (products: Product[]) => {
     const filtered = products?.filter((product: Product) => {
       // Filter by price
       // SAFE FIX 1: Check if price exists
+=======
+const filterProducts = (products: Product[]) => {
+    const filtered = products?.filter((product: Product) => {
+      // Filter by price
+      // SAFE FIX: Check if price exists, otherwise treat as 0
+>>>>>>> 50c16695 (Fix undefined price in sort logic)
       const safePriceString = product.price || '0'; 
       const productPrice = parseFloat(safePriceString.replace(/[^0-9.]/g, ''));
       
       const withinPriceRange =
         productPrice >= priceRange[0] && productPrice <= priceRange[1];
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 50c16695 (Fix undefined price in sort logic)
       if (!withinPriceRange) return false;
 
 
